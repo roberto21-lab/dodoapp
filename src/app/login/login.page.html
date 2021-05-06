@@ -1,0 +1,29 @@
+<ion-content>
+  <div><img class="logo" src="assets/Trazado 5.png"></div>
+
+<form [formGroup]="loginForm" (ngSubmit)="onLogin">
+  <div>
+    <ion-item>
+      <ion-label position="floating">NOMBRE </ion-label>
+      <ion-input type="email" formControlName="email"> </ion-input>
+      <ion-icon name="person"></ion-icon> 
+    </ion-item>
+  </div>
+  <div>
+    <ion-item>
+      <ion-label position="floating">CONTRASEÑA </ion-label>
+      <ion-input type="password" formControlName="password"> </ion-input>
+      <ion-icon name="lock-closed-outline"></ion-icon> 
+    </ion-item>
+  </div>
+</form>
+
+<div class="btn">
+  <ion-button type="submit" (click)="onLogin()">INICIAR SESION</ion-button>
+</div>
+<ion-footer>
+  <div class="texto">
+    <p>AL CREAR UNA CUENTA, ACEPTAS NUESTRAS CONDICIONES DEL SERVICIO Y NUESTRA POLITICA DE PRIVACIDAD</p>
+  </div>
+</ion-footer>
+</ion-content>

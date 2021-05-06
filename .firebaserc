@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "dodoapp-9ef0c": {
+      "hosting": {
+        "app": [
+          "dodoapp-9ef0c"
+        ]
+      }
+    }
+  }
+}

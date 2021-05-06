@@ -1,20 +1,73 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-slides  pager="true">
+    <!-- slide1 -->
+    <ion-slide>
+      <div>
+        <div><img class="logo" src="assets/Trazado 5.png"></div>
+        <div>
+          <h2><strong>DODOAPP</strong></h2>
+        </div>
+        <div>
+          <ion-button [routerLink]="['/login']" ><strong>Iniciar sesion</strong></ion-button>
+        </div>
+        <div>
+          <ion-button [routerLink]="['/registro']"><strong>Registro</strong></ion-button>
+        </div>
+      </div>
+    </ion-slide>
+    <!-- slide2 -->
+    <ion-slide>
+      <div>
+       
+        <div>
+          <img class="img-slide2" src="assets/Grupo 10.png">
+        </div>
+        <div class="organizar">
+          <p>Crea un tablero para organizar tareas</p>
+        </div>
+        <div>
+          <ion-button [routerLink]="['/login']" class="btn-slide2"><strong>Iniciar sesion</strong></ion-button>
+        </div>
+        <div>
+          <ion-button [routerLink]="['/registro']" class="btn-slide2"><strong>Registro</strong></ion-button>
+        </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+      </div>
+    </ion-slide>
+    <!-- slide3 -->
+    <ion-slide>
+      <div>
+        <div>
+          <h5><strong>Añadir detalles</strong></h5>
+        </div>
+        <div>
+          <img class="img-slide3" src="assets/añadir detalles.png">
+        </div>
+        <div class="organizar">
+          <p>Crear tarjetas para añadir imagenes, checklist y mucho mas</p>
+        </div>
+        <div>
+          <ion-button [routerLink]="['/login']" class="btn-slide3"><strong>Iniciar sesion</strong></ion-button>
+        </div>
+        <div>
+          <ion-button [routerLink]="['/registro']" class="btn-slide3" ><strong>Registro</strong></ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+  </ion-slides>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col  class="texto" size-xs="10" size-sm="8" size-lg="8" >
+        <ion-footer>
+          <div>
+            <p>AL CREAR UNA CUENTA, ACEPTAS NUESTRAS CONDICIONES DEL SERVICIO Y NUESTRA POLITICA DE PRIVACIDAD</p>
+          </div>
+        </ion-footer>
+      </ion-col>
+    </ion-row>
+</ion-grid>
+
 </ion-content>
