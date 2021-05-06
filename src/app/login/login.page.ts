@@ -1,39 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  providers: []
+  providers: [],
 })
 export class LoginPage implements OnInit {
   loginForm = new FormGroup({
     email: new FormControl(''),
-    password: new FormControl('')
-  })
-  constructor(public auth: AngularFireAuth) { }
+    password: new FormControl(''),
+  });
+  constructor(public auth: AngularFireAuth, private router: Router) {}
 
-  async ngOnInit() {
-    const { email , password } = this.loginForm.value;
-   try {
-    const result = await this.auth.signInWithEmailAndPassword(email, password)
-    
-    
-    console.log(result)
-   } catch (error) {
-     console.log(error)
-   }
+  ngOnInit() {
+    this.auth.onAuthStateChanged((user) => {
 
+      if (user) {
+        // User is signed in.
+        this.router.navigate(['/dashbor']);
+      } else {
+        // No user is signed in.
+        
+      }
+    });
+    
   }
- 
-    onlogin(){
-      
-      
-    }
 
-    
-    
+  async onLogin() {
+    const { email, password } = this.loginForm.value;
+    try {
+      const user = await this.auth.signInWithEmailAndPassword(email, password);
+      this.router.navigate(['/dashbor']);
+    } catch (error) {
+
+    }
+  }
 }
-  
