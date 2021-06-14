@@ -1,0 +1,32 @@
+<div class="modal-container">
+  <div  class="main-container">
+    <form [formGroup]="tabletForm">
+      <div class="container-items">
+        <div class="header-form">
+          <p>Crear Tablero</p>
+          <ion-icon name="close" (click)="closeModal()" ></ion-icon>
+        </div>
+        <ion-item >
+          <ion-label position="floating">Nombre del tablero </ion-label>
+          <ion-input class="selected-option-txt"  type="title" formControlName="title"> </ion-input>
+        </ion-item>
+        <ion-item (click)="openPopover($event, true)">
+          <ion-label>Espacio de Trabajo</ion-label>
+          <p class="selected-option-txt" *ngIf="tabletForm.value.workSpace" >{{tabletForm.value.workSpace}}</p>
+          <ion-icon name="chevron-down-outline"></ion-icon>
+        </ion-item>
+        <ion-item (click)="openPopover($event, false)">
+          <ion-label>Visibilidad</ion-label>
+          <p class="selected-option-txt" *ngIf="tabletForm.value.Privacy" >{{tabletForm.value.Privacy == 1 ? 'Privado' : tabletForm.value.Privacy == 2 ? 'Espacio de Trabajo' : 'Publico'  }}</p>
+          <ion-icon name="chevron-down-outline"></ion-icon>
+        </ion-item>
+      </div>
+    </form>
+    <div class="container-btns">
+      <ion-fab-button size="small" class="btn-create"  type="submit" (click)="sendToFireStore()">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-fab-button>
+      <!-- <ion-button (click)="closeModal()">close</ion-button> -->
+    </div>
+  </div>
+</div>

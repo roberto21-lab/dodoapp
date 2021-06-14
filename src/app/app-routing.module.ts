@@ -6,6 +6,7 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
+  
   {
     path: '',
     redirectTo: 'home',
@@ -23,6 +24,28 @@ const routes: Routes = [
     path: 'dashbor',
     loadChildren: () => import('./dashbor/dashbor.module').then( m => m.DashborPageModule)
   },
+  {
+    path: 'tablero/:id',
+    loadChildren: () => import('./tablero/tablero.module').then( m => m.TableroPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'setting',
+    loadChildren: () => import('./setting/setting.module').then( m => m.SettingPageModule)
+  },
+   
+    // {
+    //   path: 'tab',
+    //   children: [
+    //     {
+    //       path: 'profile',
+    //       loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    //     },
+    //   ]
+    // }
 ];
 
 @NgModule({

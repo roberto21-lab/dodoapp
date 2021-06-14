@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,7 +10,14 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   items: Observable<unknown[]>;
-  constructor(firestore: AngularFirestore) {
-    this.items = firestore.collection('items').valueChanges();
+  
+  constructor(
+    firestore: AngularFirestore,
+    private router: Router
+  ) {}
+
+  ngOnInit(){
+   
   }
+  
 }

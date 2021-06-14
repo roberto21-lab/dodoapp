@@ -1,0 +1,22 @@
+img{
+    width: 25%;
+}
+.header{
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+ion-content{
+    height: 150px;
+    padding: 30%;
+}
+
+ion-button{
+    --background: transparent;
+}
+
+ion-icon{
+    color: white;
+    font-size: 3rem;
+}

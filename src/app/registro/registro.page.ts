@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth, USE_DEVICE_LANGUAGE } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -15,55 +16,61 @@ export class RegistroPage implements OnInit {
     email: new FormControl(''),
     password: new FormControl(''),
   });
-  constructor(public afAuth: AngularFireAuth,  private router: Router) {}
+  
+  
+  
+  constructor(public afAuth: AngularFireAuth,  
+              private router: Router, 
+              private firestore: AngularFirestore) {}
 
   ngOnInit() {
 
-    this.afAuth.onAuthStateChanged((user) => {
+    // this.afAuth.onAuthStateChanged((user) => {
 
-      if (user) {
-        // User is signed in.
-        this.router.navigate(['/dashbor']);
+    //   if (user) {
+    //     // User is signed in.
         
-      } else  {
-        // No user is signed in.
         
-      }
-    });
-
-    // var user = this.afAuth.currentUser;
-    
-
-    // if (user) {
-    //   // User is signed in.
-    //   console.log(user)
-
-    // } else {
-    //   // No user is signed in.
-    // }
-    
-    
+    //   } else  {
+    //     // No user is signed in.
+        
+    //   }
+    //    }  );
   }
   
 
   async onRegister() {
-    const { email, password } = this.registerForm.value;
+    const { email,  password } = this.registerForm.value;
     
     try {
       const result = await this.afAuth.createUserWithEmailAndPassword(
         email,
         password
       );
-      this.router.navigate(['/dashbor'], {
-        queryParams: { users: email.password },
+      console.log(result)
+      const idUser = result.user.uid
+      console.log(idUser)
+      // let idUser = this.firestore.collection('user').doc(result.uid)
+      const user: any  = {
+        name: this.registerForm.value.name,
+        correo: this.registerForm.value.email,
+        id: idUser
+      }
+
+      this.firestore.collection('user').doc(idUser).set(user).then(()=>{
+        console.log('usuario guardado con exito');
+      }).catch(error => {} );
+
+      // this.router.navigate(['/dashbor'], {
+      //   queryParams: { users: email.password },
         
-      });
-      
+      // });
+      this.router.navigate(['/dashbor']);
     } catch (error) {}
 
     console.log(this.registerForm.value);
   }
-
   
+
   
 }

@@ -32,11 +32,13 @@ export class LoginPage implements OnInit {
 
   async onLogin() {
     const { email, password } = this.loginForm.value;
+    console.log(this.loginForm.value)
     try {
       const user = await this.auth.signInWithEmailAndPassword(email, password);
+      
       this.router.navigate(['/dashbor']);
     } catch (error) {
-
+      
     }
   }
 }

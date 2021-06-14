@@ -1,20 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { DashborPageRoutingModule } from './dashbor-routing.module';
 
 import { DashborPage } from './dashbor.page';
+import { TabletsComponent } from '../tablets/tablets.component'
+import { HeaderModule } from '../header/header.module';
+import { TabletsModule } from '../tablets/tablets.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DashborPageRoutingModule
+    ReactiveFormsModule,
+    DashborPageRoutingModule,
+    HeaderModule,
+    TabletsModule
+    
   ],
-  declarations: [DashborPage]
+  declarations: [DashborPage],
 })
 export class DashborPageModule {}

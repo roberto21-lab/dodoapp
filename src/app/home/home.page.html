@@ -9,10 +9,10 @@
           <h2><strong>DODOAPP</strong></h2>
         </div>
         <div>
-          <ion-button  ><strong>Iniciar sesion</strong></ion-button>
+          <ion-button (click)="SaveLs()" ><strong>Iniciar sesion</strong></ion-button>
         </div>
         <div>
-          <ion-button [routerLink]="['/registro']"><strong>Registro</strong></ion-button>
+          <ion-button (click)="SaveLsRegistro()"  ><strong>Registro</strong></ion-button>
         </div>
       </div>
     </ion-slide>
@@ -27,10 +27,10 @@
           <p>Crea un tablero para organizar tareas</p>
         </div>
         <div>
-          <ion-button  class="btn-slide2"><strong>Iniciar sesion</strong></ion-button>
+          <ion-button (click)="SaveLs()" class="btn-slide2"><strong>Iniciar sesion</strong></ion-button>
         </div>
         <div>
-          <ion-button [routerLink]="['/registro']" class="btn-slide2"><strong>Registro</strong></ion-button>
+          <ion-button (click)="SaveLsRegistro()" class="btn-slide2"><strong>Registro</strong></ion-button>
         </div>
 
       </div>
@@ -48,10 +48,10 @@
           <p>Crear tarjetas para añadir imagenes, checklist y mucho mas</p>
         </div>
         <div>
-          <ion-button  class="btn-slide3"><strong>Iniciar sesion</strong></ion-button>
+          <ion-button (click)="SaveLs()" class="btn-slide3"><strong>Iniciar sesion</strong></ion-button>
         </div>
         <div>
-          <ion-button [routerLink]="['/registro']" class="btn-slide3" ><strong>Registro</strong></ion-button>
+          <ion-button (click)="SaveLsRegistro()" class="btn-slide3" ><strong>Registro</strong></ion-button>
         </div>
       </div>
     </ion-slide>
@@ -63,7 +63,7 @@
       <ion-col  class="texto" size-xs="10" size-sm="8" size-lg="8" >
         <ion-footer>
           <div>
-            <p>AL CREAR UNA CUENTA, ACEPTAS NUESTRAS CONDICIONES DEL SERVICIO Y NUESTRA POLITICA DE PRIVACIDAD</p>
+            <p class="tipo-letra">AL CREAR UNA CUENTA, ACEPTAS NUESTRAS CONDICIONES DEL SERVICIO Y NUESTRA POLITICA DE PRIVACIDAD</p>
           </div>
         </ion-footer>
       </ion-col>

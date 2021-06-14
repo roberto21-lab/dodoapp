@@ -12,7 +12,9 @@ ion-item{
     --background: transparent;
     margin-top: 20px;
 }
-
+.registro{
+    text-align: center;
+}
 .btn{
     margin-top: 110px;
     margin-bottom: 80px;
@@ -20,11 +22,11 @@ ion-item{
 
 ion-button{
     --background: white;
-    width: 80%;
+    width: 60%;
     display: flex;
     margin: auto;
     color: black;
-    
+    --border-radius: 20px;
 
 }
 // color: white !important;
