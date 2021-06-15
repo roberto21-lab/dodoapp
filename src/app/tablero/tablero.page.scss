@@ -29,21 +29,17 @@ ion-fab-button {
 }
 
 .container {
-  width: 100%;
-  margin: auto;
-  display: flex;
-  justify-content: space-around;
   margin-top: 20px;
-  padding: 10px;
+  padding: 5px;
   .columna {
     background: rgb(7,85,224);
         background: linear-gradient(0deg, rgba(7,85,224,1) 20%, rgba(1,162,255,1) 50%);
       border: 1px solid rgb(97 42 177 / 27%);
       box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
-      width: 95%;
+      width: 100%;
     height: auto;
     border-radius: 25px;
-    padding: 20px;
+    padding: 10px;
     color: white;
     font-size: 16px;
     .columna-header {
@@ -94,13 +90,16 @@ ion-slide{
     width: 100%;
   }
   .card-tarjeta{
-    width: 90%;
+    width: 100%;
     margin: auto;
-    border: 1px solid;
     padding: 10px;
-    background: tomato;
     border-radius: 10px;
     margin-top: 10px;
+    background: black;
+    // background: rgb(7,85,224);
+    // background: linear-gradient(0deg, rgba(7,85,224,1) 20%, rgba(1,162,255,1) 50%);
+  border: 1px solid rgb(97 42 177 / 27%);
+  box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
   }
 }
 

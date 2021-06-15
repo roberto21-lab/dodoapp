@@ -34,6 +34,7 @@ export class DashborPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    
     const respProfile = await this.getProfile();
     if (respProfile) {
       // si obtenemos data de la promesa getProfile
@@ -96,8 +97,9 @@ export class DashborPage implements OnInit {
       cssClass: 'modal-create-tarjeta',
       showBackdrop: false,
       componentProps: { data: this.tableros, isEdit: false },
-
+      
     });
+    
     await modal.present();
     await modal.onDidDismiss();
     this.shwoModal = false;

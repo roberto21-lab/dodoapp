@@ -9,22 +9,26 @@
       </ion-button>
     </div>
   </div> -->
-
-  <ion-item >
-    <ion-label >Tableros</ion-label>
-    <ion-select (ionChange)="getColumns($event)" [(ngModel)]="newCard.tabletId" >
-      <ion-select-option [value]="tablero.id" *ngFor="let tablero of data;"  >{{tablero.titulo}}</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item >
-    <ion-label >Lista</ion-label>
-    <ion-select [(ngModel)]="newCard.columnId" >
-      <ng-container *ngIf="colums.length > 0">
-
-        <ion-select-option [value]="column.id" *ngFor="let column of colums;"  >{{column.name}}</ion-select-option>
-      </ng-container>
-    </ion-select>
-  </ion-item>
+  <ng-container *ngIf="!onBooard">
+    <ion-item >
+      <ion-label >Tableros</ion-label>
+      <ion-select (ionChange)="getColumns($event)" [(ngModel)]="newCard.tabletId" >
+        <ion-select-option [value]="tablero.id" *ngFor="let tablero of data;"  >{{tablero.titulo}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item >
+      <ion-label >Lista</ion-label>
+      <ion-select [(ngModel)]="newCard.columnId" >
+        <ng-container *ngIf="colums.length > 0">
+  
+          <ion-select-option [value]="column.id" *ngFor="let column of colums;"  >{{column.name}}</ion-select-option>
+        </ng-container>
+      </ion-select>
+    </ion-item>
+  </ng-container>
+  <!-- <ng-container>
+    creo que tengo que usar este container con un ngif paradecirle q cuando me den desde la columna se abara el modal pero solo muestre lo q esta en el container como hacer ?
+  </ng-container> -->
   <div class="card-tarjeta">
     <ion-item >
     <ion-input placeHolder="nombre" [(ngModel)]="newCard.name" ></ion-input>
@@ -42,19 +46,15 @@
   </ion-item>
   </div>
 
-  <ion-fab (click)="stop($event)" horizontal="start" vertical="bottom" slot="fixed">
-    <ion-fab-button size="small">
-        <ion-icon name="settings-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="end">
-        <ion-fab-button (click)="closesTarjetamodal()">
-          <ion-icon name="close"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-button (click)="sendTofireStoreCard()">
-          <ion-icon name="checkmark"></ion-icon>
-        </ion-fab-button>
-
-    </ion-fab-list>
-</ion-fab>
+<div class="btn-fab">
+  <ion-fab-button (click)="sendTofireStoreCard()" size="small">
+    <ion-icon name="checkmark"></ion-icon>
+  </ion-fab-button>
+<ion-fab-button (click)="closesTarjetamodal()" size="small">
+  <ion-icon name="close"></ion-icon>
+</ion-fab-button>
+</div>
   
+
+
 </div>

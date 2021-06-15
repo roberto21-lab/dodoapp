@@ -31,8 +31,8 @@ export class TableroPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private firestore: AngularFirestore,
     public auth: AngularFireAuth,
-    public modalController: ModalController 
-  ) {}
+    public modalController: ModalController
+  ) { }
 
   async ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -50,10 +50,10 @@ export class TableroPage implements OnInit {
     this.getCardToFireStore();
   }
 
-  goToDashbor(){
+  goToDashbor() {
     this.router.navigate(['/dashbor']);
   }
-  
+
   changeShowInput(isActive = true) {
     this.showInput = isActive;
   }
@@ -81,11 +81,8 @@ export class TableroPage implements OnInit {
     console.log(columnData);
     this.showInput = false
   }
-  
-  // getColumnsToFireStore(){
-  //   console.log('hola roberto')
 
-  // }
+  
   getProfile() {
     return new Promise((resolve) => {
       this.auth.onAuthStateChanged(async (user) => {
@@ -108,34 +105,21 @@ export class TableroPage implements OnInit {
     });
   }
 
-  async getColumnsToFireStore(){
-    
-    this.firestore
-      .collection('columns', (ref) =>
-        ref.where('tableros', 'array-contains', this.id)
-      )
+ 
+
+  async getColumnsToFireStore() {
+    this.columns = this.firestore
+      .collection('tableros')
+      .doc(this.id)
+      .collection('columns')
       .valueChanges()
       .subscribe((columns) => {
-        this.columns = this.columns;
-        console.log(this.columns)
-        
+        this.columns = columns;
+        console.log(this.columns);
       });
-      
+
+
   }
-
-  // async getColumnsToFireStore() {
-  //   this.columns = this.firestore
-  //     .collection('tableros')
-  //     .doc(this.id)
-  //     .collection('columns')
-  //     .valueChanges()
-  //     .subscribe((columns) => {
-  //       this.columns = columns;
-  //       console.log(this.columns);
-  //     });
-
-      
-  // }
 
   delete(id) {
     this.firestore
@@ -166,62 +150,78 @@ export class TableroPage implements OnInit {
 
     this.closeEdit(i);
   }
-//tarjeta  
+  //tarjeta  
 
-async sendTofireStoreCard() {
-  const idCard = this.firestore
-    .collection('tableros')
-    .doc(this.id)
-    .collection('card')
-    .doc().ref.id;
-  const cardData: any = {
-    name: this.newCard.name,
-    id: idCard,
-    timestamp: moment().unix(),
-  };
-  await this.firestore
-    .collection('tableros')
-    .doc(this.id)
-    .collection('card')
-    .doc(idCard)
-    .set(cardData);
-  console.log(cardData);
-}
+  async sendTofireStoreCard() {
+    const idCard = this.firestore
+      .collection('tableros')
+      .doc(this.id)
+      .collection('card')
+      .doc().ref.id;
+    const cardData: any = {
+      name: this.newCard.name,
+      id: idCard,
+      timestamp: moment().unix(),
+    };
+    await this.firestore
+      .collection('tableros')
+      .doc(this.id)
+      .collection('card')
+      .doc(idCard)
+      .set(cardData);
+    console.log(cardData);
+  }
 
-async getCardToFireStore() {
-  this.tarjetas = this.firestore
-    .collection('tableros')
-    .doc(this.id)
-    .collection('tarjetas')
-    .valueChanges()
-    .subscribe((tarjetas) => {
-      this.tarjetas = tarjetas;
-      console.log(this.tarjetas);
+  async getCardToFireStore() {
+    this.firestore
+      .collection('tableros')
+      .doc(this.id)
+      .collection('tarjetas')
+      .valueChanges()
+      .subscribe((tarjetas) => {
+        this.tarjetas = tarjetas;
+        console.log(this.tarjetas);
+      });
+  }
+
+  deleteTarjeta(id) {
+    this.firestore
+      .collection('tableros')
+      .doc(this.id)
+      .collection('tarjetas')
+      .doc(id)
+      .delete();
+  }
+
+  async openModalTarjeta(idColumn) {
+    this.shwoModalTarjeta = true;
+    const modal = await this.modalController.create({
+      component: TarjetaComponent,
+      cssClass: 'modal-create-tarjeta',
+      showBackdrop: false,
+      componentProps: { idTablet: this.id, idColumn, onBooard: true, isEdit: false },
+
     });
-}
+    await modal.present();
+    await modal.onDidDismiss();
+    this.shwoModalTarjeta = false;
+  }
 
-deleteTarjeta(id) {
-  this.firestore
-    .collection('tableros')
-    .doc(this.id)
-    .collection('tarjetas')
-    .doc(id)
-    .delete();
-}
+  async updateCard(idCard) {
+    this.shwoModalTarjeta = true;
+    const modal = await this.modalController.create({
+      component: TarjetaComponent,
+      cssClass: 'modal-create-tarjeta',
+      showBackdrop: false,
+      componentProps: { idTablet: this.id, idCard, onBooard: true, isEdit: false },
 
-async openModalTarjeta() {
-  // this.shwoModal = true;
-  const modal = await this.modalController.create({
-    component: TarjetaComponent,
-    cssClass: 'modal-create-tarjeta',
-    showBackdrop: false,
-    // componentProps: { data: this.tableros, isEdit: false },
+    });
+   
+    await modal.present();
+    await modal.onDidDismiss();
+    this.shwoModalTarjeta = false;
+  }
 
-  });
-  await modal.present();
-  await modal.onDidDismiss();
-  // this.shwoModal = false;
-}
 
 
 

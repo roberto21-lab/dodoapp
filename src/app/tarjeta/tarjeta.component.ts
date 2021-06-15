@@ -13,6 +13,10 @@ import * as moment from 'moment';
 export class TarjetaComponent implements OnInit {
   @Input('data') data: any = [];
   @Input('isEdit') isEdit: any = [];
+  @Input('onBooard') onBooard: boolean;
+  @Input('idTablet') idTablet: any;
+  @Input('idColumn') idColumn: any;
+  
 
   newCard: any = {};
   id = '';
@@ -26,9 +30,22 @@ export class TarjetaComponent implements OnInit {
     private firestore: AngularFirestore,
     public modalController: ModalController,
     public auth: AngularFireAuth
-  ) {}
+  ) { }
 
   async ngOnInit() {
+    if (this.isEdit){
+      // this.newCard.patchValue({
+      //   name: this.data.name,
+        
+      // });
+
+      // console.log('asdfasdfadsfasdfasdfasdfas0', this.data);
+      // console.log('asdfasdfadsfasdfasdfasdfas0', this.data.name);
+    }
+    if (this.onBooard) {
+      this.newCard.tabletId = this.idTablet;
+      this.newCard.columnId = this.idColumn;
+    }
     console.log(this.data);
     const respProfile = await this.getProfile();
     if (respProfile) {
@@ -93,11 +110,11 @@ export class TarjetaComponent implements OnInit {
       ...this.newCard,
       timestamp: moment().unix(),
       id: idCard,
-      
+
     };
-    
-      this.modalController.dismiss();
-    
+
+    this.modalController.dismiss();
+
     console.log(this.idUser);
     await this.firestore
       .collection('tableros')
@@ -108,7 +125,7 @@ export class TarjetaComponent implements OnInit {
     console.log(cardData);
   }
 
-  closesTarjetamodal(){
+  closesTarjetamodal() {
     this.modalController.dismiss();
   }
 

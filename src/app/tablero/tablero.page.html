@@ -7,7 +7,7 @@
       <ion-button (click)="changeShowInput(false)" *ngIf="showInput">
         <ion-icon name="close"></ion-icon>
       </ion-button>
-      {{ !showInput ? "nombre del talero" : 'Añadir lista'}}
+      {{ !showInput ? "nombre del tablero" : 'Añadir lista'}}
     </div>
     <ion-button *ngIf="!showInput">
       <ion-icon name="menu"></ion-icon>
@@ -16,7 +16,7 @@
       <ion-icon name="checkmark"></ion-icon>
     </ion-button>
   </div>
-  <ion-slides class="slide-tablets" [options]="optionsSlide" pager="true">
+  <ion-slides *ngIf="!shwoModalTarjeta"class="slide-tablets" [options]="optionsSlide" pager="true">
     <ng-container *ngIf="columns.length > 0">
       <ion-slide *ngFor="let column of columns; let i = index">
         <div class="container">
@@ -26,39 +26,38 @@
                 {{column.name}}
               </div>
               <ion-item *ngIf="column?.edit">
-                <ion-input placeHolder="nombre" [(ngModel)]="column.name" ></ion-input>
+                <ion-input placeHolder="nombre" [(ngModel)]="column.name"></ion-input>
               </ion-item>
 
               <ion-icon name="ellipsis-vertical-outline"></ion-icon>
             </div>
             <div class="btn-create-colunm">
-              <ion-button (click)="openModalTarjeta()" (click)="changeShowInputCard()">
+              <ion-button (click)="openModalTarjeta(column.id)">
                 <ion-icon name="add-outline"></ion-icon>
                 anadir tarjeta
               </ion-button>
             </div>
-            <!-- <div>
-              
-              <ion-item >
-                <ion-input placeHolder="nombre" [(ngModel)]="newCard.name" ></ion-input>
-              </ion-item>
-            </div> -->
-            <div  *ngIf="column?.edit" class="anadir-txt">
+            
+            <div *ngIf="column?.edit" class="anadir-txt">
               <ion-button (click)="closeEdit(i)">
                 <ion-icon name="close"></ion-icon>
               </ion-button>
+              <ion-button>hola</ion-button>
             </div>
-            <div class="card-tarjeta" *ngFor="let tarjeta of tarjetas" >
-              
-              <p>{{tarjeta.name}}</p>
-              <p>{{tarjeta.description}}</p>
-              <p>fecha de inicio </p>
-              <p>fecha de entrega</p>
-              <ion-button (click)="deleteTarjeta(tarjeta.id)">eliminar tarjeta</ion-button>
-            </div>
+            <ng-container *ngFor="let tarjeta of tarjetas">
 
-            <div  *ngIf="!column?.edit" class="anadir-txt">
-              <ion-button (click)="editColumns(i)" >editar</ion-button>
+              <div *ngIf="tarjeta.columnId == column.id" class="card-tarjeta">
+                <p>{{tarjeta.name}}</p>
+                <p>{{tarjeta.description}}</p>
+                <p>fecha de inicio </p>
+                <p>fecha de entrega</p>
+                <ion-button (click)="deleteTarjeta(tarjeta.id)">eliminar tarjeta</ion-button>
+                <ion-button (click)="updateCard(column.id)">editar tarjeta</ion-button>
+              </div>
+            </ng-container>
+
+            <div *ngIf="!column?.edit" class="anadir-txt">
+              <ion-button (click)="editColumns(i)">editar</ion-button>
               <ion-button (click)="delete(column.id)">eliminar</ion-button>
             </div>
           </div>
@@ -76,13 +75,13 @@
 
       <div class="input-create-colunm">
         <ion-item *ngIf="showInput">
-          <ion-input [(ngModel)]="newColumn.name" ></ion-input>
+          <ion-input [(ngModel)]="newColumn.name"></ion-input>
         </ion-item>
       </div>
     </ion-slide>
   </ion-slides>
 
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <!-- <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button class="fab-button">
       <ion-icon name="add-outline"></ion-icon>
     </ion-fab-button>
@@ -106,5 +105,5 @@
         </ion-fab-button>
       </div>
     </ion-fab-list>
-  </ion-fab>
+  </ion-fab> -->
 </ion-content>
