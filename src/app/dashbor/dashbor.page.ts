@@ -140,6 +140,18 @@ export class DashborPage implements OnInit {
     this.shwoModal = false;
   }
 
+  // async openModal() {
+  //   this.shwoModal = true;
+  //   const modal = await this.modalController.create({
+  //     component: TabletsComponent,
+  //     cssClass: 'modal-create',
+  //     showBackdrop: false,
+  //   });
+  //   await modal.present();
+  //   await modal.onDidDismiss();
+  //   this.shwoModal = false;
+  // }
+
   goTablero(id) {
     this.router.navigate(['tablero', id]);
   }

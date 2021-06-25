@@ -11,6 +11,8 @@ import { ModalController } from '@ionic/angular';
 })
 export class SelectPopoverComponent implements OnInit {
   @Input('workSpaceOption') workSpaceOption = false
+  @Input('workSpaceOptionColumn') workSpaceOptionColumn = false
+
   constructor( 
     public popover: PopoverController,
     public modalController: ModalController,

@@ -16,7 +16,11 @@ export class TarjetaComponent implements OnInit {
   @Input('onBooard') onBooard: boolean;
   @Input('idTablet') idTablet: any;
   @Input('idColumn') idColumn: any;
-  
+
+
+
+  showCard: boolean = false;
+
 
   newCard: any = {};
   id = '';
@@ -33,18 +37,18 @@ export class TarjetaComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    if (this.isEdit){
-      // this.newCard.patchValue({
-      //   name: this.data.name,
-        
-      // });
+    console.log(this.isEdit, 'holaaaaaaaaa')
 
-      // console.log('asdfasdfadsfasdfasdfasdfas0', this.data);
-      // console.log('asdfasdfadsfasdfasdfasdfas0', this.data.name);
-    }
+
+
+    console.log(this.data.name)
     if (this.onBooard) {
       this.newCard.tabletId = this.idTablet;
       this.newCard.columnId = this.idColumn;
+    }
+    if (this.isEdit) {
+      this.newCard.description = this.data.description
+      this.newCard.name = this.data.name
     }
     console.log(this.data);
     const respProfile = await this.getProfile();
@@ -100,29 +104,48 @@ export class TarjetaComponent implements OnInit {
   }
 
   async sendTofireStoreCard() {
-    const idCard = this.firestore
-      .collection('tableros')
-      .doc(this.newCard.tabletId)
-      .collection('tarjetas')
-      .doc().ref.id;
-    console.log(idCard)
-    const cardData: any = {
-      ...this.newCard,
-      timestamp: moment().unix(),
-      id: idCard,
+    if (this.isEdit) {
+      // this.newCard.description = this.data.description
+      //  this.newCard.name = this.data.name
+      this.firestore
+        .collection('tableros')
+        .doc(this.newCard.tabletId)
+        .collection('tarjetas')
+        .doc(this.data.id)
+        .update({
+          description: this.newCard.description,
+          name: this.newCard.name,
+        });
+      this.modalController.dismiss();
 
-    };
+      console.log('hola roberto');
+    } else {
 
-    this.modalController.dismiss();
+      const idCard = this.firestore
+        .collection('tableros')
+        .doc(this.newCard.tabletId)
+        .collection('tarjetas')
+        .doc().ref.id;
+      console.log(idCard)
+      const cardData: any = {
+        ...this.newCard,
+        timestamp: moment().unix(),
+        id: idCard,
 
-    console.log(this.idUser);
-    await this.firestore
-      .collection('tableros')
-      .doc(this.newCard.tabletId)
-      .collection('tarjetas')
-      .doc(idCard)
-      .set(cardData);
-    console.log(cardData);
+      };
+
+      this.modalController.dismiss();
+
+      console.log(this.idUser);
+      await this.firestore
+        .collection('tableros')
+        .doc(this.newCard.tabletId)
+        .collection('tarjetas')
+        .doc(idCard)
+        .set(cardData);
+      console.log(cardData);
+    }
+
   }
 
   closesTarjetamodal() {

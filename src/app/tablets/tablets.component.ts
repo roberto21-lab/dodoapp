@@ -33,8 +33,8 @@ export class TabletsComponent implements OnInit {
         
       });
 
-      console.log('asdfasdfadsfasdfasdfasdfas0', this.data);
-      console.log('asdfasdfadsfasdfasdfasdfas0', this.data.titulo);
+      console.log('roberto', this.data);
+      console.log('brian', this.data.titulo);
     }
   }
 

@@ -2,16 +2,18 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { TarjetaComponent } from '../tarjeta/tarjeta.component';
+import { SelectPopoverComponent } from '../select-popover/select-popover.component';
 @Component({
   selector: 'app-tablero',
   templateUrl: './tablero.page.html',
   styleUrls: ['./tablero.page.scss'],
 })
 export class TableroPage implements OnInit {
+  @Input('isEdit') isEdit;
   id = '';
   showInputCard: boolean = false;
   shwoModalTarjeta: boolean = false;
@@ -26,17 +28,29 @@ export class TableroPage implements OnInit {
   profile: any = null;
   newCard: any = {};
   tarjetas: any = [];
+  tableros: any = [];
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private firestore: AngularFirestore,
     public auth: AngularFireAuth,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public popoverController: PopoverController
   ) { }
 
   async ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     console.log(this.id);
+
+    if (this.isEdit) {
+      this.columns.patchValue();
+      console.log(this.columns)
+      // this.getTablerosFireStore();
+      // console.log(this.tableros)
+
+
+    }
+
     const respProfile = await this.getProfile();
     if (respProfile) {
       // si obtenemos data de la promesa getProfile
@@ -48,6 +62,8 @@ export class TableroPage implements OnInit {
     console.log(this.profile);
     this.getColumnsToFireStore();
     this.getCardToFireStore();
+    this.getTablerosFireStore();
+    
   }
 
   goToDashbor() {
@@ -82,7 +98,7 @@ export class TableroPage implements OnInit {
     this.showInput = false
   }
 
-  
+
   getProfile() {
     return new Promise((resolve) => {
       this.auth.onAuthStateChanged(async (user) => {
@@ -105,7 +121,7 @@ export class TableroPage implements OnInit {
     });
   }
 
- 
+
 
   async getColumnsToFireStore() {
     this.columns = this.firestore
@@ -122,6 +138,7 @@ export class TableroPage implements OnInit {
   }
 
   delete(id) {
+    console.log('hola roberto')
     this.firestore
       .collection('tableros')
       .doc(this.id)
@@ -207,23 +224,86 @@ export class TableroPage implements OnInit {
     this.shwoModalTarjeta = false;
   }
 
-  async updateCard(idCard) {
+  async updateCard(data, idCard) {
     this.shwoModalTarjeta = true;
     const modal = await this.modalController.create({
       component: TarjetaComponent,
       cssClass: 'modal-create-tarjeta',
       showBackdrop: false,
-      componentProps: { idTablet: this.id, idCard, onBooard: true, isEdit: false },
+      componentProps: { data , idTablet: this.id, idCard, onBooard: true, isEdit: true },
 
     });
-   
+
     await modal.present();
     await modal.onDidDismiss();
+    // if(onBooard){
+
+    // }
     this.shwoModalTarjeta = false;
   }
 
+  async openPopoverColunm(event, workSpaceOptionColumn, colunmId, indexColumn) {
+    console.log("open popover ")
+    const popover = await this.popoverController.create({
+      component: SelectPopoverComponent,
+      cssClass: 'my-popover-column',
+      event,
+      showBackdrop: true,
+      backdropDismiss: true,
+      componentProps: {
+        workSpaceOptionColumn,
+      },
+    });
+    await popover.present();
+    const { data }: any = await popover.onDidDismiss();
+    if (workSpaceOptionColumn) {
+      this.columns.patchValue({ workSpaceOptionColumn: data });
+    } else {
+      // this.tabletForm.patchValue({ Privacy: data });
+    }
+    console.log(data)
+    if(data == 4){
+     this.delete(colunmId)
+    }else if(data == 5){
+      this.editColumns(indexColumn)
+    }
+    // console.log('dasddasdasdadas' data.valor1)
+  }
 
 
+  async sendToFireStoreUpdateColunm(id, i) {
+    console.log(id, this.columns[i].name)
+    if (id && this.columns[i].name) {
+      this.firestore.collection('tableros').doc(this.id)
+        .collection('columns')
+        .doc(id)
+        .update({ name: this.columns[i].name })
+    }
+
+  }
+
+  async getTablerosFireStore() {
+    this.tableros =
+    this.firestore.collection('tableros').doc(this.id)
+    .valueChanges()
+    .subscribe((tableros) => {
+      this.tableros = tableros;
+      console.log(this.tableros);
+    });
+    // .ref.id;
+    console.log(this.tableros)
+    // this.firestore
+    //   .collection('tableros', (ref) =>
+    //     ref.where('users', 'array-contains', this.idUser)
+    //   )
+    //   .valueChanges()
+    //   .subscribe((tableros) => {
+    //     this.tableros = tableros;
+    //     console.log(this.tableros)
+        
+    //   });
+      
+  }
 
 
 }

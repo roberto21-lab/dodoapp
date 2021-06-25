@@ -52,11 +52,18 @@
   margin: auto;
 }
 .my-popover-class {
+  
   --background: rgba(1, 162, 255, 1) 95%;
 }
 .popover-content {
   --width: 70%;
   border-radius: 0 !important;
+}
+.my-popover-column {
+  
+  --background: rgba(1, 162, 255, 1) 95%;
+  
+  
 }
 
 
