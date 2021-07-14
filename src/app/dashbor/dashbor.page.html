@@ -10,14 +10,14 @@
 
 <ion-content>
     <div class="header">
-        <app-header></app-header>
+        <app-header (true)="truePropagar($event)" (propagar)="procesaPropagar($event)" ></app-header>
     </div>
     <div *ngIf=!shwoModal class="card">
         <!-- *ngIf="show; else showdos" -->
         <div class="profilename">
             !Hola {{profile?.name}} bienvenido...
         </div>
-        
+
         <div *ngIf="!tableros.length">
             <div class="card-ejemplo">
                 <div class="notienestableros">
@@ -25,27 +25,28 @@
                 </div>
                 <br>
                 <br>
-                  <img src="assets/Grupo 6.png">
+                <img src="assets/Grupo 6.png">
             </div>
 
             <div class="legustaria">
-                le gustaria crear uno ahora? 
+                le gustaria crear uno ahora?
                 <br>
                 toque el signo del mas en la parte inferior!
             </div>
 
         </div>
-        
 
-        <div *ngIf="tableros.length"> 
+
+        <div *ngIf="tableros.length">
             <ion-list (click)="goTablero(tablero.id)" *ngFor="let tablero of tableros;">
                 <ion-item>
                     <ion-card>
-                        <ion-card-header class="profilename">{{tablero.titulo}}</ion-card-header>
+                        <ion-card-header class="txt-title">{{tablero.titulo}}</ion-card-header>
                         <ion-card-content>
                             <div class="container-profile-name">
                                 <p>{{tablero.workSpace}}</p>
-                                <p>{{tablero.Privacy == 1 ? 'Privado' : tablero.Privacy == 2 ? 'Espacio de Trabajo' : 'Publico'  }}</p>
+                                <p>{{tablero.Privacy == 1 ? 'Privado' : tablero.Privacy == 2 ? 'Espacio de Trabajo' : 'Publico'  }}
+                                </p>
                             </div>
                             <ion-fab (click)="stop($event)" horizontal="start" vertical="bottom" slot="fixed">
                                 <ion-fab-button size="small">
@@ -58,7 +59,7 @@
                                     <ion-fab-button (click)="update(tablero)">
                                         <ion-icon name="create-outline"></ion-icon>
                                     </ion-fab-button>
-    
+
                                 </ion-fab-list>
                             </ion-fab>
                             <!-- <ion-button (click)="update(tablero)">edit</ion-button>
@@ -81,13 +82,13 @@
         <ion-fab-list side="top">
             <div class="btn-fab">
                 <p class="letras">tablero</p>
-                <ion-fab-button  (click)="openModal()">
+                <ion-fab-button (click)="openModal()">
                     <ion-icon name="newspaper-outline"></ion-icon>
                 </ion-fab-button>
             </div>
             <div class="btn-fab">
                 <p class="letras">tarjetas</p>
-                <ion-fab-button (click)="openModalTarjeta()">
+                <ion-fab-button (click)="openPopoverTarjeta()">
                     <ion-icon name="reader-outline"></ion-icon>
                 </ion-fab-button>
             </div>

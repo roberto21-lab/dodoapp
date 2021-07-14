@@ -12,6 +12,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
+import { AngularFireStorageModule } from '@angular/fire/storage';
+
 
 
 
@@ -24,9 +28,11 @@ import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
      AngularFireModule.initializeApp(environment.firebase),
      AngularFireAnalyticsModule,
     AngularFirestoreModule,
+    DragDropModule,
+    AngularFireStorageModule,
       AppRoutingModule
      ],  
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy} ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

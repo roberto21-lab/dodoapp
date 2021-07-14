@@ -52,8 +52,7 @@ ion-content {
     text-align: center;
     margin: auto;
     margin-bottom: 20px;
-    --background: rgb(7,85,224);
-      --background: linear-gradient(0deg, rgba(7,85,224,1) 20%, rgba(1,162,255,1) 50%);
+    background: white;
     box-shadow: none;
     ion-button {
       width: 45%;
@@ -71,6 +70,12 @@ ion-icon {
   font-size: 2rem;
   color: white;
 }
+
+.txt-title{
+  font-size: 1.2rem;
+  color: black;
+}
+
 .profilename {
   display: flex;
   justify-content: center;
@@ -119,7 +124,7 @@ ion-fab-button {
 
 
 .letras {
-  color: white;
+  color: black;
 }
 
 .container-profile-name{
@@ -131,7 +136,7 @@ ion-fab-button {
   justify-content: space-between;
   p{
     width: 50%;
-    color: white;
+    color: black;
     font-size: 18px;
   }
 }

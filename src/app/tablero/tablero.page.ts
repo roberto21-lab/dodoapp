@@ -6,7 +6,13 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { TarjetaComponent } from '../tarjeta/tarjeta.component';
-import { SelectPopoverComponent } from '../select-popover/select-popover.component';
+import { PopoverColumnComponent } from '../popover-column/popover-column.component';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { TransitiveCompileNgModuleMetadata } from '@angular/compiler';
+
+
+
+// popover-column
 @Component({
   selector: 'app-tablero',
   templateUrl: './tablero.page.html',
@@ -29,6 +35,13 @@ export class TableroPage implements OnInit {
   newCard: any = {};
   tarjetas: any = [];
   tableros: any = [];
+  movingCard = null;
+  movingColumn = null;
+  gridSize = 50;
+  
+  grids = [0, 50, 100, 150, 200];
+
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -51,6 +64,7 @@ export class TableroPage implements OnInit {
 
     }
 
+  
     const respProfile = await this.getProfile();
     if (respProfile) {
       // si obtenemos data de la promesa getProfile
@@ -63,7 +77,34 @@ export class TableroPage implements OnInit {
     this.getColumnsToFireStore();
     this.getCardToFireStore();
     this.getTablerosFireStore();
-    
+
+  }
+  allowDrop(event) {
+    event.preventDefault();
+  }
+  drop(event) {
+    console.log(event.target.id, this.movingCard, this.movingColumn)
+    console.log(event.target.id)
+    if (event.target.id) {
+      this.firestore
+        .collection('tableros')
+        .doc(this.id)
+        .collection('tarjetas')
+        .doc(this.movingCard)
+        .update({
+          columnId: event.target.id,
+        });
+    }
+
+    document.querySelectorAll('.columna').forEach(column => column.classList.remove('drop'));
+
+  }
+  drag(e, indexCard, indexColumn) {
+    this.movingCard = indexCard;
+    console.log(this.newCard)
+    this.movingColumn = indexColumn;
+    e.dataTransfer.setData('text/html', e.currentTarget.outerHTML);
+    e.dataTransfer.setData('text/plain', e.currentTarget.dataset.id);
   }
 
   goToDashbor() {
@@ -132,6 +173,20 @@ export class TableroPage implements OnInit {
       .subscribe((columns) => {
         this.columns = columns;
         console.log(this.columns);
+        setTimeout(() => {
+          const dragEnter = event => {
+            event.currentTarget.classList.add('drop');
+          };
+
+          const dragLeave = event => {
+            event.currentTarget.classList.remove('drop');
+          };
+
+          document.querySelectorAll('.columna').forEach(column => {
+            column.addEventListener('dragenter', dragEnter);
+            column.addEventListener('dragleave', dragLeave);
+          });
+        }, 1000)
       });
 
 
@@ -198,7 +253,23 @@ export class TableroPage implements OnInit {
       .subscribe((tarjetas) => {
         this.tarjetas = tarjetas;
         console.log(this.tarjetas);
+        setTimeout(() => {
+          const dragStart = event => {
+            event.currentTarget.classList.add('dragging');
+          };
+
+          const dragEnd = event => {
+            event.currentTarget.classList.remove('dragging');
+          };
+
+          document.querySelectorAll('.card-tarjeta').forEach(card => {
+            card.addEventListener('dragstart', dragStart);
+            card.addEventListener('dragend', dragEnd);
+          });
+        }, 1000)
+
       });
+
   }
 
   deleteTarjeta(id) {
@@ -210,32 +281,31 @@ export class TableroPage implements OnInit {
       .delete();
   }
 
-  async openModalTarjeta(idColumn) {
+  async openPopoverTarjeta(idColumn) {
     this.shwoModalTarjeta = true;
-    const modal = await this.modalController.create({
+    const popover = await this.popoverController.create({
       component: TarjetaComponent,
-      cssClass: 'modal-create-tarjeta',
-      showBackdrop: false,
       componentProps: { idTablet: this.id, idColumn, onBooard: true, isEdit: false },
 
     });
-    await modal.present();
-    await modal.onDidDismiss();
+    await popover.present();
+    await popover.onDidDismiss();
     this.shwoModalTarjeta = false;
   }
 
   async updateCard(data, idCard) {
     this.shwoModalTarjeta = true;
-    const modal = await this.modalController.create({
+    const popover = await this.popoverController.create({
       component: TarjetaComponent,
-      cssClass: 'modal-create-tarjeta',
-      showBackdrop: false,
-      componentProps: { data , idTablet: this.id, idCard, onBooard: true, isEdit: true },
+      // backdropDismiss: true,
+      cssClass: 'update-card',
+
+      componentProps: { data, idTablet: this.id, idCard, onBooard: true, isEdit: true },
 
     });
 
-    await modal.present();
-    await modal.onDidDismiss();
+    await popover.present();
+    await popover.onDidDismiss();
     // if(onBooard){
 
     // }
@@ -245,11 +315,8 @@ export class TableroPage implements OnInit {
   async openPopoverColunm(event, workSpaceOptionColumn, colunmId, indexColumn) {
     console.log("open popover ")
     const popover = await this.popoverController.create({
-      component: SelectPopoverComponent,
+      component: PopoverColumnComponent,
       cssClass: 'my-popover-column',
-      event,
-      showBackdrop: true,
-      backdropDismiss: true,
       componentProps: {
         workSpaceOptionColumn,
       },
@@ -262,9 +329,9 @@ export class TableroPage implements OnInit {
       // this.tabletForm.patchValue({ Privacy: data });
     }
     console.log(data)
-    if(data == 4){
-     this.delete(colunmId)
-    }else if(data == 5){
+    if (data == 4) {
+      this.delete(colunmId)
+    } else if (data == 5) {
       this.editColumns(indexColumn)
     }
     // console.log('dasddasdasdadas' data.valor1)
@@ -284,12 +351,12 @@ export class TableroPage implements OnInit {
 
   async getTablerosFireStore() {
     this.tableros =
-    this.firestore.collection('tableros').doc(this.id)
-    .valueChanges()
-    .subscribe((tableros) => {
-      this.tableros = tableros;
-      console.log(this.tableros);
-    });
+      this.firestore.collection('tableros').doc(this.id)
+        .valueChanges()
+        .subscribe((tableros) => {
+          this.tableros = tableros;
+          console.log(this.tableros);
+        });
     // .ref.id;
     console.log(this.tableros)
     // this.firestore
@@ -300,9 +367,9 @@ export class TableroPage implements OnInit {
     //   .subscribe((tableros) => {
     //     this.tableros = tableros;
     //     console.log(this.tableros)
-        
+
     //   });
-      
+
   }
 
 

@@ -29,7 +29,7 @@
   bottom: 15px !important;
 }
 
-.slide-tablets{
+.slide-tablets {
   .swiper-pagination {
     display: none;
   }
@@ -43,27 +43,57 @@
   display: flex;
   margin: auto;
 }
+
 .modal-create-tarjeta {
   --background: transparent;
-  --border-radius: 20px !important;
+  // --border-radius: 20px !important;
+
   width: 95%;
-  height: 55vh;
+  height: auto;
   display: flex;
+  align-items: center;
+  justify-content: center;
   margin: auto;
 }
+
 .my-popover-class {
-  
+
   --background: rgba(1, 162, 255, 1) 95%;
 }
+
 .popover-content {
   --width: 70%;
   border-radius: 0 !important;
 }
+
 .my-popover-column {
-  
+  width: 50%;
   --background: rgba(1, 162, 255, 1) 95%;
-  
-  
+
+
 }
 
 
+ion-backdrop {
+  --backdrop-opacity: 0.3
+}
+
+.wsasaksas {
+  .popover-content {
+    width: 95%;
+    display: flex;
+    margin: auto;
+
+  }
+}
+
+.update-card {
+  .popover-content {
+    width: 95%;
+    display: flex;
+    height: auto;
+
+    margin: auto;
+
+  }
+}

@@ -6,12 +6,11 @@
         <ion-button (click)="goToDashbor()">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </ion-button>
-        <p >{{tableros.titulo}}</p>
+        <p>{{tableros.titulo}}</p>
       </div>
-      <ion-button >
+      <ion-button>
         <ion-icon name="menu"></ion-icon>
       </ion-button>
-      <!-- {{ !showInput ? "nombre del tablero" : 'Añadir lista'}} -->
     </div>
   </div>
   <div class="btn-colunm">
@@ -20,26 +19,26 @@
       añadir lista
     </ion-button>
   </div>
-<ng-container  *ngIf="showInput">
+  <ng-container *ngIf="showInput">
 
-  <div class="input-create-colunm">
-    <ion-item *ngIf="showInput"> 
-          <ion-button (click)="changeShowInput(false)" >
-            <ion-icon name="close"></ion-icon>
-          </ion-button>
+    <div class="input-create-colunm">
+      <ion-item *ngIf="showInput">
+        <ion-button (click)="changeShowInput(false)">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
 
-      <ion-input [(ngModel)]="newColumn.name"></ion-input>
-      <ion-button (click)="sendTofireStoreColumn()">
-        <ion-icon name="checkmark"></ion-icon> 
-      </ion-button>
-    </ion-item>
-  </div>
-  
-</ng-container>
-  <ion-slides *ngIf="!shwoModalTarjeta" class="slide-tablets" [options]="optionsSlide" pager="true">
+        <ion-input [(ngModel)]="newColumn.name"></ion-input>
+        <ion-button (click)="sendTofireStoreColumn()">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+
+  </ng-container>
+  <ion-slides *ngIf="!shwoModalTarjeta" class="slide-tablets; padding-bottom: 4rem;" [options]="optionsSlide" pager="true">
     <ng-container *ngIf="columns.length > 0">
-      <ion-slide *ngFor="let column of columns; let i = index">
-        <div class="container">
+      <ion-slide class="swiper-no-swiping" *ngFor="let column of columns; let i = index">
+        <div class="container" >
           <div class="columna">
             <div class="columna-header">
               <div *ngIf="!column?.edit">
@@ -54,95 +53,46 @@
                   <ion-icon name="checkmark"></ion-icon>
                 </ion-button>
               </ion-item>
-              
+
               <ion-button class="btn-popover" (click)="openPopoverColunm($event, false, column.id, i)">
                 <ion-icon name="ellipsis-vertical-outline"></ion-icon>
               </ion-button>
             </div>
+            <div [id]="column.id" style="min-height:200px; padding-bottom: 4rem;" (drop)="drop($event)" (dragover)="allowDrop($event)">
+              <div  *ngFor="let tarjeta of tarjetas;let indexCard = index">
+                <div *ngIf="tarjeta.columnId == column.id" class="card-tarjeta" [attr.draggable]="true" (dragstart)="drag($event, tarjeta.id, column.id)" [attr.data-id]="indexCard">
 
-
-            <!-- <div *ngIf="column?.edit" class="anadir-txt">
-              <ion-button (click)="closeEdit(i)">
-                <ion-icon name="close"></ion-icon>
-              </ion-button>
-              <ion-button (click)="sendToFireStoreUpdateColunm(column.id,i)">
-                <ion-icon name="checkmark"></ion-icon>
-              </ion-button>
-            </div> -->
-            <ng-container *ngFor="let tarjeta of tarjetas">
-
-              <div *ngIf="tarjeta.columnId == column.id" class="card-tarjeta">
-
-                <p>{{tarjeta.name}}</p>
-                <p>{{tarjeta.description}}</p>
-                <p>fecha de inicio </p>
-                <p>fecha de entrega</p>
-                <div class="btn-fab-card">
-                  <ion-fab-button size="small"  (click)="deleteTarjeta(tarjeta.id)">
-                    <ion-icon name="trash-outline"></ion-icon>
-                  </ion-fab-button>
-                  <ion-fab-button size="small" (click)="updateCard(tarjeta,  column.id)">
-                    <ion-icon name="create-outline"></ion-icon>
-                  </ion-fab-button>
+                  <p>{{tarjeta.name}}</p>
+                  <p>{{tarjeta.description}}</p>
+                  <p>{{tarjeta.timestamp + "000"  | date:  "dd/MMM/yy" }} </p>
+                  <p >{{tarjeta.expireData | date:  "dd/MMM/yy"}}</p>
+                  <div class="btn-fab-card">
+                    <ion-fab-button size="small" (click)="deleteTarjeta(tarjeta.id)">
+                      <ion-icon name="trash-outline"></ion-icon>
+                    </ion-fab-button>
+                    <ion-fab-button size="small" (click)="updateCard(tarjeta,  column.id)">
+                      <ion-icon name="create-outline"></ion-icon>
+                    </ion-fab-button>
+                  </div>
                 </div>
               </div>
-            </ng-container>
+            </div>
 
             <div class="btn-create-colunm">
-              <ion-button (click)="openModalTarjeta(column.id)">
+              <ion-button (click)="openPopoverTarjeta(column.id)">
                 <ion-icon name="add-outline"></ion-icon>
                 añadir tarjeta
               </ion-button>
             </div>
 
-            <!-- <div *ngIf="!column?.edit" >
-              <div class="btn-fab-card">
-                <ion-fab-button (click)="delete(column.id)">
-                  <ion-icon name="trash-outline"></ion-icon>
-                </ion-fab-button>
-                <ion-fab-button  (click)="editColumns(i)">
-                  <ion-icon name="create-outline"></ion-icon>
-                </ion-fab-button>
-              </div>
-              <ion-button (click)="editColumns(i)">editar</ion-button>
-              <ion-button (click)="delete(column.id)">eliminar</ion-button>
-            </div> -->
-
           </div>
         </div>
       </ion-slide>
     </ng-container>
-    <ion-slide class="container-add">
-      <!-- boton aqui -->
-
-
-     
-    </ion-slide>
   </ion-slides>
 
-  <!-- <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button class="fab-button">
-      <ion-icon name="add-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <div class="btn-fab">
-        <p class="letras">acercar</p>
-        <ion-fab-button (click)="show=!show" (click)="openModal()">
-          <ion-icon name="newspaper-outline"></ion-icon>
-        </ion-fab-button>
-      </div>
-      <div class="btn-fab">
-        <p class="letras">alejar</p>
-        <ion-fab-button>
-          <ion-icon name="reader-outline"></ion-icon>
-        </ion-fab-button>
-      </div>
-      <div class="btn-fab">
-        <p class="letras">agregar columna</p>
-        <ion-fab-button>
-          <ion-icon name="reader-outline"></ion-icon>
-        </ion-fab-button>
-      </div>
-    </ion-fab-list>
-  </ion-fab> -->
+
+
+
+
 </ion-content>

@@ -1,6 +1,6 @@
 .modal-container {
   height: 100%;
-  background: #118cff;
+  background: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +11,7 @@
         .header-form {
           display: flex;
           align-items: center;
-          color: white;
+          color: black;
           ion-icon {
             font-size: 1.7rem;
           }
@@ -31,7 +31,7 @@
           --inner-padding-start: 0;
           ion-label,
           ion-icon {
-            color: white;
+            color: black;
             font-size: 0.8rem;
           }
         }
@@ -54,7 +54,7 @@
   }
 
   .selected-option-txt{
-    color: white;
+    color: black;
     font-size: 14px;
     margin: 0;
     margin-right: 10px;

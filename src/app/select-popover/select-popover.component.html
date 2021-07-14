@@ -1,57 +1,51 @@
 <div>
-  <div *ngIf="workSpaceOption" >
+  <div *ngIf="workSpaceOption">
     <div class="popover" (click)="selecteOption('roberto ravelo')">
       <ion-icon name="person"></ion-icon>
       <p> Roberto Ravelo</p>
     </div>
   </div>
   <div *ngIf="!workSpaceOption">
-    <ng-container *ngIf="workSpaceOptionColumn">
-
-      <div (click)="selecteOption(1)">
-        <div class="popover" >
-          <ion-icon name="lock-closed"></ion-icon>
-          <p>Privado</p>
-        </div>
-        <p>El tablero es privado. Solo las personas añadidas al tablero pueden verlo y editarlo</p>
+    <div (click)="selecteOption(1)">
+      <div class="popover">
+        <ion-icon name="lock-closed"></ion-icon>
+        <p>Privado</p>
       </div>
-      <div (click)="selecteOption(2)">
-        <div class="popover" >
-          <ion-icon name="person"></ion-icon>
-          <p>Espacio de trabajo</p>
-        </div>
-        <p>Este tablero lo pueden ver solo los <br> miembros del espacio de trabajo. Solo las personas anadidas al tablero <br> lo pueden editar</p>
+      <p>El tablero es privado. Solo las personas añadidas al tablero pueden verlo y editarlo</p>
+    </div>
+    <div (click)="selecteOption(2)">
+      <div class="popover">
+        <ion-icon name="person"></ion-icon>
+        <p>Espacio de trabajo</p>
       </div>
-      <div (click)="selecteOption(3)">
-        <div class="popover" >
-          <ion-icon name="megaphone"></ion-icon>
-          <p>Publico</p>
-        </div>
-        <p>El tablero es publico. lo puede ver cualquier persona que acceda al elance y aparecera <br> en los resultados del buscador como Google. solo personas anadidas al tablero lo pueden editar</p>
+      <p>Este tablero lo pueden ver solo los <br> miembros del espacio de trabajo. Solo las personas anadidas al tablero
+        <br> lo pueden editar</p>
+    </div>
+    <div (click)="selecteOption(3)">
+      <div class="popover">
+        <ion-icon name="megaphone"></ion-icon>
+        <p>Publico</p>
       </div>
-    </ng-container>
-    <div (click)="selecteOption(4)">
-      <div  class="delete-edit">
-        <ion-icon name="trash-outline"></ion-icon>
-        <p>Eliminar columna</p>
-    <div (click)="selecteOption(5)">
-      <div  class="delete-edit">
-        <ion-icon name="create-outline"></ion-icon>
-        <p>Editar columna</p>
-  </div>
+      <p>El tablero es publico. lo puede ver cualquier persona que acceda al elance y aparecera <br> en los resultados
+        del buscador como Google. solo personas anadidas al tablero lo pueden editar</p>
+    </div>
+    <div *ngIf="workSpaceOptionColumn">
 
-<!-- <div *ngIf="!workSpaceOptionColumn">
-
-<ion-fab-button (click)="delete(column.id)">
-  <ion-icon name="trash-outline"></ion-icon>
-</ion-fab-button>
-<ion-fab-button  (click)="editColumns(i)">
-  <ion-icon name="create-outline"></ion-icon>
-</ion-fab-button>
-</div> -->
-
-</div>
+      <div (click)="selecteOption(4)">
+        <div class="delete-edit">
+          <ion-icon name="trash-outline"></ion-icon>
+          <p>Eliminar columna</p>
+          <div (click)="selecteOption(5)">
+            <div class="delete-edit">
+              <ion-icon name="create-outline"></ion-icon>
+              <p>Editar columna</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 
 
-<!-- *ngIf="workSpaceOption" -->
-<!-- *ngIf="workSpaceOption" -->
+    <!-- *ngIf="workSpaceOption" -->
+    <!-- *ngIf="workSpaceOption" -->

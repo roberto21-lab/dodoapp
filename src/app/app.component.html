@@ -1,7 +1,7 @@
 <ion-app>
   
   <ion-router-outlet></ion-router-outlet>
-  <div class="tabs">
+  <div *ngIf="shwoTabs" class="tabs">
     <ion-tabs>
       <ion-tab-bar  slot="bottom" > 
         
@@ -11,12 +11,12 @@
         <ion-tab-button tab="profile">
           <ion-icon name="person"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button>
+        <!-- <ion-tab-button>
           <ion-icon name="shield-outline"></ion-icon>
         </ion-tab-button>
         <ion-tab-button>
           <ion-icon name="notifications-outline"></ion-icon>
-        </ion-tab-button>
+        </ion-tab-button> -->
       
       </ion-tab-bar>
     </ion-tabs>

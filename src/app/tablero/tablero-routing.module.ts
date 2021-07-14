@@ -23,7 +23,7 @@ const routes: Routes = [
 
   ],
   exports: [RouterModule],
-  declarations: [ SelectPopoverComponent ],
+  
 })
 
 export class TableroPageRoutingModule {}

@@ -42,7 +42,7 @@ export class TabletsComponent implements OnInit {
     this.modalController.dismiss();
   }
 
-  async sendToFireStore(id) {
+  async sendToFireStore() {
     console.log(this.isEdit, this.tabletForm);
     if (this.isEdit) {
       this.firestore

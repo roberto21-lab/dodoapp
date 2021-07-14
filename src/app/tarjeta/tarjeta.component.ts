@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import * as moment from 'moment';
 
 @Component({
@@ -33,6 +33,8 @@ export class TarjetaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private firestore: AngularFirestore,
     public modalController: ModalController,
+    public popoverController: PopoverController,
+
     public auth: AngularFireAuth
   ) { }
 
@@ -115,8 +117,9 @@ export class TarjetaComponent implements OnInit {
         .update({
           description: this.newCard.description,
           name: this.newCard.name,
+          expireData: this.newCard.expireData,
         });
-      this.modalController.dismiss();
+      this.popoverController.dismiss();
 
       console.log('hola roberto');
     } else {
@@ -134,7 +137,7 @@ export class TarjetaComponent implements OnInit {
 
       };
 
-      this.modalController.dismiss();
+      this.popoverController.dismiss();
 
       console.log(this.idUser);
       await this.firestore
@@ -149,7 +152,7 @@ export class TarjetaComponent implements OnInit {
   }
 
   closesTarjetamodal() {
-    this.modalController.dismiss();
+    this.popoverController.dismiss();
   }
 
 

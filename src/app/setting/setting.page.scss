@@ -1,0 +1,29 @@
+ion-content {
+  --background: rgb(1, 162, 255);
+
+  --background: linear-gradient(0deg, rgb(1 162 255) 1%, rgb(10 129 197) 26%, rgba(111, 0, 255, 1) 64%);
+}
+
+.header {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  ion-button{
+      --background: transparent;
+  }
+  p{
+      font-size: 1.2rem;
+    
+  }
+  
+}
+      .btn-logout{
+        width: 35%;
+        margin-left: 50px;
+        ion-button {
+          --background: white;
+          color: black;
+          border-radius: 20px;
+        }
+      }

@@ -24,17 +24,19 @@ export class DashborPage implements OnInit {
   shwoModal: boolean = false;
   privacy: '';
   tableros: any = [];
+  tablerosAuxiliar: any = [];
   idUser = '';
   profile: any = null;
+  search: any;
   constructor(
     public auth: AngularFireAuth,
     private router: Router,
     private firestore: AngularFirestore,
-    public modalController: ModalController // public popoverController: PopoverController
-  ) {}
+    public modalController: ModalController ,
+    public popoverController: PopoverController
+  ) { }
 
   async ngOnInit() {
-    
     const respProfile = await this.getProfile();
     if (respProfile) {
       // si obtenemos data de la promesa getProfile
@@ -46,9 +48,25 @@ export class DashborPage implements OnInit {
     console.log(this.profile)
     this.getTablerosFireStore();
   }
+  procesaPropagar({title}) {
+    console.log('event en padre, title', title , true);
+    const result = this.tablerosAuxiliar.filter(tablero => tablero.titulo.toLowerCase().includes(title.toLowerCase()));
+    console.log(result)
+    this.tableros = result
+
+  }
+
+  truePropagar(evento){
+    console.log('aki mostrar todos los tableros', evento)
+    this.tableros = this.tablerosAuxiliar
+    console.log(this.tableros)
+    
+  }
+
   stop(event) {
     event.stopPropagation();
   }
+
   getProfile() {
     return new Promise((resolve) => {
       this.auth.onAuthStateChanged(async (user) => {
@@ -71,14 +89,7 @@ export class DashborPage implements OnInit {
     });
   }
 
-  async logOut() {
-    try {
-      await this.auth.signOut();
-      this.router.navigate(['/login']);
-    } catch (err) {
-      console.log('error', err);
-    }
-  }
+  
   async openModal() {
     this.shwoModal = true;
     const modal = await this.modalController.create({
@@ -90,23 +101,20 @@ export class DashborPage implements OnInit {
     await modal.onDidDismiss();
     this.shwoModal = false;
   }
-  async openModalTarjeta() {
-    this.shwoModal = true;
-    const modal = await this.modalController.create({
+  async openPopoverTarjeta() {
+    const popover = await this.popoverController.create({
       component: TarjetaComponent,
-      cssClass: 'modal-create-tarjeta',
-      showBackdrop: false,
+      cssClass: 'wsasaksas',
+
       componentProps: { data: this.tableros, isEdit: false },
-      
     });
-    
-    await modal.present();
-    await modal.onDidDismiss();
-    this.shwoModal = false;
+
+    await popover.present();
+    await popover.onDidDismiss();
   }
 
   async getTablerosFireStore() {
-    
+
     this.firestore
       .collection('tableros', (ref) =>
         ref.where('users', 'array-contains', this.idUser)
@@ -114,27 +122,30 @@ export class DashborPage implements OnInit {
       .valueChanges()
       .subscribe((tableros) => {
         this.tableros = tableros;
+        this.tablerosAuxiliar = tableros
         console.log(this.tableros)
-        
+
       });
-      
+
   }
-  
+
   eliminarTableros(id) {
     console.log()
     this.firestore.collection('tableros').doc(id).delete();
     console.log('eliminando tablero', this.tableros);
   }
 
-  async update(data, id) {
+  async update(data) {
     this.shwoModal = true;
     const modal = await this.modalController.create({
       component: TabletsComponent,
       cssClass: 'modal-create',
-      showBackdrop: false,
+      // showBackdrop: false,
+      showBackdrop: true,
+      backdropDismiss: true,
       componentProps: { data, isEdit: true },
     });
-   
+
     await modal.present();
     await modal.onDidDismiss();
     this.shwoModal = false;

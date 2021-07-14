@@ -26,6 +26,10 @@
       <ion-input placeHolder="description" [(ngModel)]="newCard.description"></ion-input>
     </ion-item>
 
+    <ion-item>
+      <ion-datetime [(ngModel)]="newCard.expireData"  displayFormat="DDD MMM YYYY" placeholder="fecha de entrga"></ion-datetime>
+    </ion-item>
+
     <!-- <ion-item>
         <ion-label position="floating">MM/DD/YYYY</ion-label>
         <ion-datetime [(ngModel)]="newCard.startData" displayFormat="MM/DD/YYYY" min="2021-01-01" max="2030-01-01"></ion-datetime>

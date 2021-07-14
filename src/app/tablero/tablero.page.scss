@@ -32,19 +32,21 @@ ion-fab-button {
   --background: #443c3ca6;
 }
 
+
+
 .container {
   margin-top: 20px;
-  padding: 5px;
+  padding: 10px;
   width: 100%;
 
   .columna {
-    background: #8b54d252 84%;
+    background: #777677c7 84%;
     border: 1px solid rgb(97 42 177 / 27%);
     box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
     width: 100%;
-    height: auto;
+    // height: auto;
     border-radius: 25px;
-    padding: 10px;
+    padding: 10px 20px;
     color: white;
     font-size: 16px;
 
@@ -122,6 +124,16 @@ ion-fab {
   }
 }
 
+.dad-container-test {
+  width: 100%;
+  height: 30rem; 
+  .drop-zone {
+    
+    height: 100%;
+    width: 100%;  
+  }  
+}
+
 ion-slide {
   width: 80%;
   display: flex;
@@ -133,8 +145,10 @@ ion-slide {
     padding: 10px;
     border-radius: 10px;
     margin-top: 10px;
-    background: rgb(7, 85, 224);
-    background: linear-gradient(0deg, rgba(7, 85, 224, 1) 20%, rgba(1, 162, 255, 1) 50%);
+    background: white;
+    color: black;
+    // background: rgb(7, 85, 224);
+    // background: linear-gradient(0deg, rgba(7, 85, 224, 1) 20%, rgba(1, 162, 255, 1) 50%);
     border: 1px solid rgb(97 42 177 / 27%);
     box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
   }
@@ -192,4 +206,47 @@ ion-slide {
 
 .btn-popover {
   --background: transparent;
+}
+
+
+
+.grid-container {
+}
+
+.text-item {
+  width: fit-content;
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+.drag-grid {
+  max-width: fit-content;
+}
+
+.card-tarjeta {
+  cursor: grab;
+}
+
+.card-tarjeta:active {
+  cursor: grabbing;
+}
+
+.card-tarjeta {
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.card-tarjeta.dragging {
+  opacity: .5;
+  transform: scale(.8);
+}
+.columna {
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.columna.drop {
+  border: 2px dashed #FFF;
+}
+
+.columna.drop article {
+  pointer-events: none;
 }

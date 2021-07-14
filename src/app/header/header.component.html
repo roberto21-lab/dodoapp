@@ -1,10 +1,21 @@
 <div>
-  <div class="header">
-  <ion-icon name="home-outline"></ion-icon>
-    
+  <div *ngIf="!showInput" class="header">
+    <ion-icon (click)="goToDashbor()" name="home-outline"></ion-icon>
+
     <img class="logo" src="assets/Trazado 5.png">
-   
-      <ion-icon name="search-outline"></ion-icon>
-   
+
+    <ion-icon (click)="verBuscador()" name="search-outline"></ion-icon>
+
   </div>
+  <ng-container *ngIf="showInput">
+    <ion-button  (click)="cerrarBuscador()" >
+      cerrar
+    </ion-button>
+    <ion-item>
+      <ion-searchbar placeholder="buscar tablero" [(ngModel)]="search.title" (ionChange)="test($event)"></ion-searchbar>
+      <ion-button (click)="onPropagar()">
+        buscar
+      </ion-button>
+    </ion-item>
+  </ng-container>
 </div>
