@@ -12,6 +12,9 @@ ion-content {
 
   ion-button {
     --background: transparent;
+    ion-icon{
+      color: white;
+    }
   }
 
   p {
@@ -41,6 +44,7 @@ img {
   border: 1px solid rgba(97, 42, 177, 0.27);
 
   ion-avatar {
+    margin-top: 20px;
     width: 30%;
     --border-radius: 45px;
     background: #777677c7 84%;

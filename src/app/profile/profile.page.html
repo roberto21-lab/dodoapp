@@ -6,29 +6,37 @@
     <p>perfil</p>
   </div>
   <img class="logo" src="assets/Trazado 5.png">
-<div class="container">
-  
+  <div class="container">
     <ion-avatar *ngIf="!imgProfile">
       <ion-icon name="person"></ion-icon>
     </ion-avatar>
+
     <ion-avatar *ngIf="imgProfile">
-      <img class="img-avatar" [src]="imgProfile" alt="" >
+      <img class="img-avatar" [src]="imgProfile" alt="">
     </ion-avatar>
+
+    <ion-avatar *ngIf="previewImg" >
+      <img class="img-avatar" [src]="previewImg" alt="">
+    </ion-avatar>
+
+    <!-- </ion-avatar> -->
     <div>
-      
+
     </div>
     <div class="editar-foto">
-      <ion-button (click)="uploadImg()" >subir foto</ion-button>
+      <ion-button (click)="selectimg.click()">cambiar foto</ion-button>
     </div>
-    
-    <div >
-      <input id="inputfileselect" hidden type="file" accept=".png" (change)="onUpload($event)">
+
+    <div class="editar-foto">
+      <ion-button *ngIf="btnSaveImg"  (click)="onUpload($event)">guardar foto</ion-button>
     </div>
-    
+
+    <input id="inputfileselect" hidden #selectimg type="file" accept=".png" (change)="changedPhoto($event)">
+
     <div class="name-edit">
       <p>Nombre: {{profile?.name}} </p>
-      
-      <ion-button (click)="changeShowInput()" >cambiar nombre </ion-button>
+
+      <ion-button (click)="changeShowInput()">cambiar nombre </ion-button>
     </div>
     <ng-container *ngIf="showInput">
 
@@ -37,15 +45,18 @@
           <ion-button (click)="changeShowInput(false)">
             <ion-icon name="close"></ion-icon>
           </ion-button>
-  
-          <ion-input  [(ngModel)]="newName.name"></ion-input>
+
+          <ion-input [(ngModel)]="newName.name"></ion-input>
           <ion-button (click)="sendTofireBaseChangeName()">
             <ion-icon name="checkmark"></ion-icon>
           </ion-button>
         </ion-item>
       </div>
-  
+
     </ng-container>
-</div>
-  
+  </div>
+
 </ion-content>
+
+
+

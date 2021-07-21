@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 
 import { ModalController, PopoverController } from '@ionic/angular';
 //page
@@ -23,6 +24,7 @@ export class DashborPage implements OnInit {
   @Input('data') data;
   shwoModal: boolean = false;
   privacy: '';
+  aaa: any = '';
   tableros: any = [];
   tablerosAuxiliar: any = [];
   idUser = '';
@@ -32,6 +34,7 @@ export class DashborPage implements OnInit {
     public auth: AngularFireAuth,
     private router: Router,
     private firestore: AngularFirestore,
+    private sanitizer: DomSanitizer,
     public modalController: ModalController ,
     public popoverController: PopoverController
   ) { }
@@ -66,7 +69,9 @@ export class DashborPage implements OnInit {
   stop(event) {
     event.stopPropagation();
   }
-
+  hola(ev) {
+    this.aaa = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(ev.target.files[0]))
+  }
   getProfile() {
     return new Promise((resolve) => {
       this.auth.onAuthStateChanged(async (user) => {
